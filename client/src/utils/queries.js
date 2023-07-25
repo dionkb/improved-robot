@@ -2,7 +2,13 @@
 
 // export const GET_ME = gql`
 //     query me {
-//         TODO:
+//         user {
+//             _id
+//             username
+//             email
+//             bookCount
+//             savedBooks
+//         }
 //     }
 // `;
 
