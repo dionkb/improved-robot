@@ -1,7 +1,5 @@
 const { Book, User } = require('../models');
 
-const { User } = require("../models");
-
 const resolvers = {
     Query: {
         me: async (parent, { username }) => {
