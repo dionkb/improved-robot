@@ -8,6 +8,11 @@ import {
   Row
 } from 'react-bootstrap';
 
+// TODO: ADD IN WHEN TRANSITIONING
+// import { useMutation } from '@apollo/client';  
+// import { SAVE_BOOK } from '../utils/mutations';
+
+
 import Auth from '../utils/auth';
 import { saveBook, searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
@@ -25,7 +30,9 @@ const SearchBooks = () => {
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
-  });
+  }); // REMOVE WHEN TRANSITIONING!
+  // TODO: ABOVE AND BELOW
+  // const [saveBook, { error }] = useMutation(SAVE_BOOK); ADD IN WHEN TRANSITIONING
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -72,14 +79,24 @@ const SearchBooks = () => {
     }
 
     try {
+      // --------- STARTER -----------
       const response = await saveBook(bookToSave, token);
-
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
-
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      // ------------------------------
+      // TODO:
+      // ---------- APOLLO ------------
+      // const { data } = await saveBook({
+      //   variables: bookToSave,
+      // });
+      // console.log(data);
+
+      // window.location.reload();
+      // -------------------------------
+
     } catch (err) {
       console.error(err);
     }
