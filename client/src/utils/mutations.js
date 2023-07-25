@@ -85,5 +85,3 @@ export const REMOVE_BOOK = gql`
         } 
     }
 `;
-
-// Uncomment it all out once ready to transition to apollo
