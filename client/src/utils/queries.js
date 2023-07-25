@@ -7,7 +7,15 @@
 //             username
 //             email
 //             bookCount
-//             savedBooks
+            // savedBooks {
+            //     _id
+            //     authors
+            //     description
+            //     bookId
+            //     image
+            //     link
+            //     title
+            // }
 //         }
 //     }
 // `;
