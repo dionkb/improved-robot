@@ -1,4 +1,5 @@
-const { Book, User } = require('../models');
+const { User } = require('../models');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
@@ -13,26 +14,33 @@ const resolvers = {
             return newUser;
         },
         login: async (parent, { email, password }) => {
-            const matchUser = User.findOne(
-                { email, password },
-                { new: true }
+            const matchUser = await User.findOne(
+                { email },
             );
-            return matchUser;
+            const matchPassword = await matchUser.isCorrectPassword(password);
+            const token = signToken(matchUser);
+            return { matchUser, token };
         },
-        // TODO:
-        // saveBook: async (parent, { SaveBookInput }, context) => {
-        //     const savedBook = await User.findOneAndUpdate(
-        //         { args },
-        //         { }
-        //     );
-        //     return savedBook;
-        // },
-        // removeBook: async (parent, { username }) => {
-        //     const deleteSavedBook = await User.findOneAndRemove(
-        //         { args },
-        //         { }
-        //     )
-        // },
+        saveBook: async (parent, { SaveBookInput }, context) => {
+            if (context.matchUser) {
+                const userAddBook = await User.findByIdAndUpdate(
+                    { _id: context.matchUser._id },
+                    { $push: { savedBooks: SaveBookInput }},
+                    { new: true },
+                );
+            }
+            return userAddBook;
+        },
+        removeBook: async (parent, { bookId }, context) => {
+            if (context.matchUser) {
+                const userRemoveBook = await User.findByIdAndUpdate(
+                    { _id: context.matchUser._id },
+                    { $pull: { savedBooks: {bookId} }},
+                    { new: true },
+                );
+                return userRemoveBook;
+            }
+        },
     },
 };
 
