@@ -10,8 +10,9 @@ const resolvers = {
     },
     Mutation: {
         addUser: async (parent, args) => {
-            const newUser = User.create(args);
-            return newUser;
+            const newUser = await User.create(args);
+            const token = signToken(newUser);
+            return { newUser, token };
         },
         login: async (parent, { email, password }) => {
             const matchUser = await User.findOne(
@@ -21,11 +22,11 @@ const resolvers = {
             const token = signToken(matchUser);
             return { matchUser, token };
         },
-        saveBook: async (parent, { SaveBookInput }, context) => {
+        saveBook: async (parent, { addedBook }, context) => {
             if (context.matchUser) {
                 const userAddBook = await User.findByIdAndUpdate(
                     { _id: context.matchUser._id },
-                    { $push: { savedBooks: SaveBookInput }},
+                    { $push: { savedBooks: addedBook }},
                     { new: true },
                 );
             }
