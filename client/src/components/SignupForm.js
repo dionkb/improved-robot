@@ -13,7 +13,6 @@ const SignupForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const [addUser, { error }] = useMutation(ADD_USER);
-  console.log(error);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -34,7 +33,7 @@ const SignupForm = () => {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
-      Auth.login(data.token);
+      Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
