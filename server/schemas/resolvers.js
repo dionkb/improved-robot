@@ -19,17 +19,18 @@ const resolvers = {
             );
             return matchUser;
         },
-        // saveBook: async (parent, args) => {
+        // TODO:
+        // saveBook: async (parent, { SaveBookInput }, context) => {
         //     const savedBook = await User.findOneAndUpdate(
         //         { args },
-        //         { FIXME: Figure out how to add this savedBook to the savedBooks array for User}
+        //         { }
         //     );
         //     return savedBook;
         // },
         // removeBook: async (parent, { username }) => {
         //     const deleteSavedBook = await User.findOneAndRemove(
         //         { args },
-        //         { FIXME: }
+        //         { }
         //     )
         // },
     },
